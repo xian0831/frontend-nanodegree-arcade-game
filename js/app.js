@@ -38,9 +38,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    var boardWidth = ctx.canvas.width;
     this.x += this.speed*dt*10;
-    if(this.x>boardWidth){
+    if(this.x>ctx.canvas.width){
         this.x = -100;
         this.speed = Math.random()*20 + 5;
     }
@@ -71,9 +70,17 @@ var Player = function(x,y,width,height){
     this.height = height;
     this.sprite = 'images/char-boy.png';
     this.lineLevel = ENTITY_CONFIG.PLAYER_STARTING_LINE_LEVEL;
+    this.score = 0;
 };
 
 Player.prototype.render = function() {
+    // render scores
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.font = "30px Impact";
+    ctx.fillText("Score",10,100);
+    ctx.strokeText("Score  "+this.score,10,100);
+    // render player image
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
 
@@ -109,6 +116,7 @@ Player.prototype.handleInput = function(direction) {
 };
 
 Player.prototype.init = function() {
+    this.score = 0;
     this.x = ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2;
     this.y = ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10;
     this.lineLevel = ENTITY_CONFIG.PLAYER_STARTING_LINE_LEVEL;
