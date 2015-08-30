@@ -14,7 +14,7 @@
  * a little simpler to work with.
  */
 
-var Engine = (function(global) {
+var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
@@ -80,7 +80,34 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+    }
+
+    /* This function checks the collection between the player object and a single
+     * Enemy object.
+     */
+    function checkEnemyCollision(enemy) {
+        // private: size of the enemy subject
+        var _enemySize = enemy.x + enemy.width;
+        // private: size of the player subject
+        var _playerSize = player.x + player.width;
+
+        //use line level instead of exact y value, I use simpler line level system.
+        if (enemy.lineLevel === player.lineLevel) {
+            // -20 to increase accuracy on visual
+            if ((_enemySize-20 >= player.x && _enemySize-20 < _playerSize) ||
+                (_playerSize-20 >= enemy.x && _playerSize-20 < _enemySize)) {
+                console.log("DIE!");
+                player.init();
+            }
+        }
+    }
+
+    //This function checks the collection between the player object and other objects
+    function checkCollisions() {
+        allEnemies.forEach(function (enemy) {
+            checkEnemyCollision(enemy);
+        });
     }
 
     /* This is called by the update function  and loops through all of the
@@ -91,7 +118,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
+        allEnemies.forEach(function (enemy) {
             enemy.update(dt);
         });
         player.update();
@@ -148,7 +175,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
+        allEnemies.forEach(function (enemy) {
             enemy.render();
         });
 
