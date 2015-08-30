@@ -5,13 +5,23 @@ var ENTITY_CONFIG = {
 };
 
 // Enemies our player must avoid
-var Enemy = function(x,y,width,height) {
+var Enemy = function(x,y,width,height,type) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    if(typeof type === "string"){
+        switch (type) {
+            case "bug":
+                // The image/sprite for our enemies
+                this.sprite = 'images/enemy-bug.png';
+                break;
+            case "bear":
+                // The image/sprite for our enemies,
+                this.sprite = 'images/enemy-bear.png';
+                break;
+        }
+    }
+
 
     // The position for our enemies
     this.x = x;
@@ -44,10 +54,10 @@ Enemy.prototype.render = function() {
 
 // Calculate vertical levels
 Enemy.prototype.setLineLevel = function() {
-    if(this.y <= 0){
+    if(this.y < 120){
         this.lineLevel = 0;
     } else {
-        this.lineLevel = Math.floor(this.y/83)+1;
+        this.lineLevel = Math.floor((this.y-120)/ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE)+1;
     }
 };
 
@@ -111,15 +121,19 @@ Player.prototype.init = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-var bug_1 = new Enemy(-100,65,101,171);
+var bug_1 = new Enemy(-100,120,101,171,"bug");
 bug_1.setLineLevel();
-var bug_2 = new Enemy(-100,145,101,171);
+var bug_2 = new Enemy(-100,203,101,171,"bug");
 bug_2.setLineLevel();
-var bug_3 = new Enemy(-100,225,101,171);
+var bug_3 = new Enemy(-100,283,101,171,"bug");
 bug_3.setLineLevel();
+var bear_1 = new Enemy(-100,200,101,100,"bear");
+bear_1.setLineLevel();
+
 allEnemies.push(bug_1);
 allEnemies.push(bug_2);
 allEnemies.push(bug_3);
+allEnemies.push(bear_1);
 var player = new Player(ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2,ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10,101,171);
 
 
