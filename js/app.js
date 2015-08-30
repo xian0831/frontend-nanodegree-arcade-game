@@ -2,7 +2,6 @@ var ENTITY_CONFIG = {
     HORIZONTAL_MOVE_DISTANCE : 101,
     VERTICAL_MOVE_DISTANCE : 83,
     PLAYER_STARTING_LINE_LEVEL : 5
-
 };
 
 // Enemies our player must avoid
@@ -76,22 +75,32 @@ Player.prototype.update = function() {
 Player.prototype.handleInput = function(direction) {
     if (typeof direction === "string"){
         if(direction === "left"){
-            this.x -= ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE;
-        } else if (direction === "right"){
-            this.x += ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE;
+            if(this.x-ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE>=0){
+                this.x -= ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE;
+            }
+        } else if (direction === "right" && this.x <= ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*4){
+            if(this.x+ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE<ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*5){
+                this.x += ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE;
+            }
         } else if (direction === "up") {
-            this.lineLevel--;
-            this.y -= ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE;
+            // compare to -10 is because 10 is the offest for enemy image
+            if(this.y-ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE >= -10){
+                this.lineLevel--;
+                this.y -= ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE;
+            }
         } else if (direction === "down") {
-            this.lineLevel++;
-            this.y += ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE;
+            if(this.y+ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE< ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5){
+                this.lineLevel++;
+                this.y += ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE;
+            }
+
         }
     }
 };
 
 Player.prototype.init = function() {
     this.x = ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2;
-    this.y = ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5;
+    this.y = ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10;
     this.lineLevel = ENTITY_CONFIG.PLAYER_STARTING_LINE_LEVEL;
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
@@ -111,7 +120,7 @@ bug_3.setLineLevel();
 allEnemies.push(bug_1);
 allEnemies.push(bug_2);
 allEnemies.push(bug_3);
-var player = new Player(ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2,406,101,171);
+var player = new Player(ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2,ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10,101,171);
 
 
 
