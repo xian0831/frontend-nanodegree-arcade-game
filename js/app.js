@@ -143,14 +143,14 @@ var Gem = function(x,y,type) {
         switch (type) {
             case "orange":
                 // The image/sprite for our enemies
-                this.sprite = 'images/Gem Orange.png';
+                this.sprite = 'images/gem-orange.png';
                 // Value foe the gem
                 this.value = 1;
                 break;
             case "green":
                 // The image/sprite for our enemies
-                this.sprite = 'images/Gem Green.png';
-                this.value = '10';
+                this.sprite = 'images/gem-green.png';
+                this.value = 10;
                 break;
         }
     }

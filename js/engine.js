@@ -81,6 +81,7 @@ var Engine = (function (global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkDrowning();
     }
 
     /* This function checks the collection between the player object and a single
@@ -135,6 +136,15 @@ var Engine = (function (global) {
             checkGemCollision(gem);
         });
 
+    }
+
+    // This function checks if the player move to the water block
+    function checkDrowning(){
+        if(player.lineLevel === 0){
+            //Play game over sound effect
+            audioGameOver.play();
+            player.init();
+        }
     }
 
     /* This is called by the update function  and loops through all of the
@@ -240,8 +250,8 @@ var Engine = (function (global) {
         'images/enemy-bug.png',
         'images/enemy-bear.png',
         'images/char-boy.png',
-        'images/Gem Orange.png',
-        "images/Gem Green.png"
+        'images/gem-orange.png',
+        "images/gem-green.png"
     ]);
     Resources.onReady(init);
 
