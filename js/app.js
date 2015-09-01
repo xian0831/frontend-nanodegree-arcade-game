@@ -202,7 +202,7 @@ var bug_2 = new Enemy(-100,203,101,171,"bug");
 bug_2.setLineLevel();
 var bug_3 = new Enemy(-100,286,101,171,"bug");
 bug_3.setLineLevel();
-var bear_1 = new Enemy(-100,200,101,100,"bear");
+var bear_1 = new Enemy(-100,203,101,100,"bear");
 bear_1.setLineLevel();
 
 allEnemies.push(bug_1);
