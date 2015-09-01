@@ -116,6 +116,7 @@ var Engine = (function (global) {
         //use line level instead of exact y value, I use simpler line level system.
         if (gem.lineLevel === player.lineLevel && gem.x === player.x) {
             gem.update();
+            gem.setLineLevel();
             audioCoin.play();
             player.score = parseInt(gem.value,10)+parseInt(player.score,10);
             console.log(gem.value);
