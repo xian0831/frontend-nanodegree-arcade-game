@@ -224,7 +224,7 @@ allEnemies.push(bug_2);
 allEnemies.push(bug_3);
 allEnemies.push(bear_1);
 
-var allGems = []
+var allGems = [];
 
 var gem = new Gem(Math.floor((Math.random()*5))*101,120+Math.floor(Math.random()*3)*83,"orange");
 gem.setLineLevel();
