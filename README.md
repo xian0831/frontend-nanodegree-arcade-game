@@ -31,3 +31,5 @@ Arrow key : up, down, left and right
 ### Summary
 This is a good practice for my JavaScript especially in Object Oriented JavaScript. I learn how to properly perform 
 inheritance in JavaScript. I also learn how to use Canvas to draw images and perform animation.
+
+The source code for this game is host at https://github.com/xian0831/frontend-nanodegree-arcade-game
