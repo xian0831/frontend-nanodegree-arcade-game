@@ -1,3 +1,4 @@
+
 var ENTITY_CONFIG = {
     HORIZONTAL_MOVE_DISTANCE : 101,
     VERTICAL_MOVE_DISTANCE : 83,
@@ -12,6 +13,7 @@ var audioCoin = new Audio('sound/coin.mp3');
 
 // Enemies our player must avoid
 var Enemy = function(x,y,width,height,type) {
+    "use strict";
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -41,6 +43,7 @@ var Enemy = function(x,y,width,height,type) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+    "use strict";
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -54,11 +57,13 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    "use strict";
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Calculate vertical levels
 Enemy.prototype.setLineLevel = function() {
+    "use strict";
     if(this.y < 120){
         this.lineLevel = 0;
     } else {
@@ -70,6 +75,7 @@ Enemy.prototype.setLineLevel = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x,y,width,height){
+    "use strict";
     this.x = x;
     this.y = y;
     this.width = width;
@@ -80,12 +86,13 @@ var Player = function(x,y,width,height){
 };
 
 Player.prototype.render = function() {
-
+    "use strict";
     // render player image
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
 
 Player.prototype.update = function() {
+    "use strict";
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
 
@@ -93,6 +100,7 @@ Player.prototype.update = function() {
 
 // Handler for keyboard input
 Player.prototype.handleInput = function(direction) {
+    "use strict";
     if (typeof direction === "string"){
         if(direction === "left"){
             if(this.x-ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE>=0){
@@ -119,6 +127,7 @@ Player.prototype.handleInput = function(direction) {
 };
 
 Player.prototype.init = function() {
+    "use strict";
     this.score = 0;
     this.x = ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2;
     this.y = ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10;
@@ -127,17 +136,20 @@ Player.prototype.init = function() {
 };
 
 var Item = function (x,y) {
+    "use strict";
     this.x = x;
     this.y = y;
 };
 
 Item.prototype.render = function() {
+    "use strict";
     // render player image
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
 
 
 var Gem = function(x,y,type) {
+    "use strict";
     Item.call(this,x,y);
     if(typeof type === "string"){
         switch (type) {
@@ -168,6 +180,7 @@ Gem.prototype = Object.create(Item.prototype);
 Gem.prototype.constructor = Gem.prototype;
 
 Gem.prototype.update = function() {
+    "use strict";
     // render player image
     do{
         var tmp = Math.floor((Math.random()*5))*101;
@@ -179,6 +192,7 @@ Gem.prototype.update = function() {
 };
 
 Gem.prototype.setLineLevel = function() {
+    "use strict";
     if(this.y < 120){
         this.lineLevel = 0;
     } else {
@@ -229,6 +243,7 @@ var player = new Player(ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2,ENTITY_CONFIG.V
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+    "use strict";
     var allowedKeys = {
         37: 'left',
         38: 'up',
