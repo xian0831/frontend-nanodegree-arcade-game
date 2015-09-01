@@ -1,6 +1,15 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+#### Description
+This is a simple arcade game which build on top of Object Oriented Javascript and HTML. 
 
-for self-checking their submission.
+#### Rule
+The goal for this game is actually really simple. All you need to do is trying to avoid bugs and the cute bear. At the 
+same time, you need to collect gems to increase your score.
+
+Your score will be reset to 0 if you die!
+
+#### Control
+Arrow key : up, down, left and right
+
