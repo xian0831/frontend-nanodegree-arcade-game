@@ -98,9 +98,31 @@ var Engine = (function (global) {
             if ((_enemySize-20 >= player.x && _enemySize-20 < _playerSize) ||
                 (_playerSize-20 >= enemy.x && _playerSize-20 < _enemySize)) {
                 console.log("DIE!");
+
+                //Play game over sound effect
+                audioGameOver.play();
                 player.init();
             }
         }
+
+    }
+
+    function checkGemCollision(gem) {
+        // privateL size of the gem object
+        var _gemSize = gem.x + gem.width;
+        // private: size of the player subject
+        var _playerSize = player.x + player.width;
+
+        //use line level instead of exact y value, I use simpler line level system.
+        if (gem.lineLevel === player.lineLevel && gem.x === player.x) {
+            gem.update();
+            audioCoin.play();
+            player.score = parseInt(gem.value,10)+parseInt(player.score,10);
+            console.log(gem.value);
+        }
+
+        //render score for player score
+        renderScore(gem);
     }
 
     //This function checks the collection between the player object and other objects
@@ -108,6 +130,10 @@ var Engine = (function (global) {
         allEnemies.forEach(function (enemy) {
             checkEnemyCollision(enemy);
         });
+        allGems.forEach(function (gem) {
+            checkGemCollision(gem);
+        });
+
     }
 
     /* This is called by the update function  and loops through all of the
@@ -178,8 +204,20 @@ var Engine = (function (global) {
         allEnemies.forEach(function (enemy) {
             enemy.render();
         });
-
+        allGems.forEach(function (gem) {
+            gem.render();
+        })
         player.render();
+        renderScore();
+    }
+
+    function renderScore() {
+        // render scores
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#000000";
+        ctx.font = "30px Impact";
+        ctx.fillText("Score",10,100);
+        ctx.strokeText("Score  "+player.score,10,100);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -200,7 +238,9 @@ var Engine = (function (global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/enemy-bear.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Gem Orange.png',
+        "images/Gem Green.png"
     ]);
     Resources.onReady(init);
 

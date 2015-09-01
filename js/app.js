@@ -1,8 +1,14 @@
 var ENTITY_CONFIG = {
     HORIZONTAL_MOVE_DISTANCE : 101,
     VERTICAL_MOVE_DISTANCE : 83,
-    PLAYER_STARTING_LINE_LEVEL : 5
+    PLAYER_STARTING_LINE_LEVEL : 5,
+
+
 };
+
+// Game over audio
+var audioGameOver = new Audio('sound/game-over.mp3');
+var audioCoin = new Audio('sound/coin.mp3');
 
 // Enemies our player must avoid
 var Enemy = function(x,y,width,height,type) {
@@ -74,12 +80,7 @@ var Player = function(x,y,width,height){
 };
 
 Player.prototype.render = function() {
-    // render scores
-    ctx.fillStyle = "#ffffff";
-    ctx.strokeStyle = "#000000";
-    ctx.font = "30px Impact";
-    ctx.fillText("Score",10,100);
-    ctx.strokeText("Score  "+this.score,10,100);
+
     // render player image
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
@@ -87,6 +88,8 @@ Player.prototype.render = function() {
 Player.prototype.update = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
+
+
 
 // Handler for keyboard input
 Player.prototype.handleInput = function(direction) {
@@ -123,6 +126,70 @@ Player.prototype.init = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
 };
 
+var Item = function (x,y) {
+    this.x = x;
+    this.y = y;
+};
+
+Item.prototype.render = function() {
+    // render player image
+    ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
+};
+
+
+var Gem = function(x,y,type) {
+    Item.call(this,x,y);
+    if(typeof type === "string"){
+        switch (type) {
+            case "orange":
+                // The image/sprite for our enemies
+                this.sprite = 'images/Gem Orange.png';
+                // Value foe the gem
+                this.value = 1;
+                break;
+            case "green":
+                // The image/sprite for our enemies
+                this.sprite = 'images/Gem Green.png';
+                this.value = '10';
+                break;
+        }
+    }
+    this.width = 101;
+    this.height = 100;
+
+    if(this.y < 120){
+        this.lineLevel = 0;
+    } else {
+        this.lineLevel = Math.floor((this.y-120)/ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE)+1;
+    }
+};
+
+Gem.prototype = Object.create(Item.prototype);
+Gem.prototype.constructor = Gem.prototype;
+
+Gem.prototype.update = function() {
+    // render player image
+    do{
+        var tmp = Math.floor((Math.random()*5))*101;
+    }while(tmp === this.x);
+
+    this.x = tmp;
+    this.y = 120+Math.floor(Math.random()*3)*83;
+    ctx.drawImage(Resources.get(this.sprite),this.x,this.y);
+};
+
+Gem.prototype.setLineLevel = function() {
+    if(this.y < 120){
+        this.lineLevel = 0;
+    } else {
+        this.lineLevel = Math.floor((this.y-120)/ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE)+1;
+    }
+};
+
+
+
+
+
 
 
 // Now instantiate your objects.
@@ -133,7 +200,7 @@ var bug_1 = new Enemy(-100,120,101,171,"bug");
 bug_1.setLineLevel();
 var bug_2 = new Enemy(-100,203,101,171,"bug");
 bug_2.setLineLevel();
-var bug_3 = new Enemy(-100,283,101,171,"bug");
+var bug_3 = new Enemy(-100,286,101,171,"bug");
 bug_3.setLineLevel();
 var bear_1 = new Enemy(-100,200,101,100,"bear");
 bear_1.setLineLevel();
@@ -142,6 +209,18 @@ allEnemies.push(bug_1);
 allEnemies.push(bug_2);
 allEnemies.push(bug_3);
 allEnemies.push(bear_1);
+
+var allGems = []
+
+var gem = new Gem(Math.floor((Math.random()*5))*101,120+Math.floor(Math.random()*3)*83,"orange");
+gem.setLineLevel();
+
+var gem_2 = new Gem(Math.floor((Math.random()*5))*101,120+Math.floor(Math.random()*3)*83,"green");
+gem_2.setLineLevel();
+
+allGems.push(gem);
+allGems.push(gem_2);
+
 var player = new Player(ENTITY_CONFIG.HORIZONTAL_MOVE_DISTANCE*2,ENTITY_CONFIG.VERTICAL_MOVE_DISTANCE*5-10,101,171);
 
 
