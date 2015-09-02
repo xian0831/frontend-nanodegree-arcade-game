@@ -109,10 +109,6 @@ var Engine = (function (global) {
     }
 
     function checkGemCollision(gem) {
-        // privateL size of the gem object
-        var _gemSize = gem.x + gem.width;
-        // private: size of the player subject
-        var _playerSize = player.x + player.width;
 
         //use line level instead of exact y value, I use simpler line level system.
         if (gem.lineLevel === player.lineLevel && gem.x === player.x) {
